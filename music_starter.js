@@ -48,7 +48,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
    function Bones(){
       for (i=0; i< 70; i++){
-      let lengthSpeed = 0.5;
+      let lengthSpeed = 0.6;
       let boneX = (100-i*100) + frameCount;
      // if (boneX > 640) {
       //   boneX = 0;
@@ -59,7 +59,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
          bone_length = map(bass, 0, 100,(200+boneX*lengthSpeed), (300+boneX*lengthSpeed));
       }  
       else if (boneX > 319)  {
-         bone_length = map(bass,0,100,(200+(320*lengthSpeed))-(boneX*lengthSpeed),(300+(320*lengthSpeed))-(boneX*lengthSpeed));
+         bone_length = map(bass,0,100,(870*lengthSpeed)-(boneX*lengthSpeed),(970*lengthSpeed)-(boneX*lengthSpeed));
       }
       else{
          bone_length = map(bass, 0, 100,200, 300);
