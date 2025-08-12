@@ -2,7 +2,7 @@
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
 /////////////////Parameters////////////////////////
-   background(149, 174, 201)
+   background(0)
   textFont('Verdana'); // please use CSS safe fonts
   rectMode(CENTER)
   textSize(24);
@@ -47,19 +47,21 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
    } 
 
    function Bones(){
-      for (i=0; i< 70; i++){
-      let lengthSpeed = 0.6;
+      for (i=0; i< 6; i++){
+      let lengthSpeed = 0.5+(0.02*drum);
       let boneX = (100-i*100) + frameCount;
-     // if (boneX > 640) {
-      //   boneX = 0;
-     // }
       
+      // 0.6 = + 380,  0.3 = + 195 
+      
+      while (boneX > 660){
+         boneX = boneX - 660;
+      }
 
       if(boneX > 1 && boneX < 320) {
          bone_length = map(bass, 0, 100,(200+boneX*lengthSpeed), (300+boneX*lengthSpeed));
       }  
       else if (boneX > 319)  {
-         bone_length = map(bass,0,100,(870*lengthSpeed)-(boneX*lengthSpeed),(970*lengthSpeed)-(boneX*lengthSpeed));
+         bone_length = map(bass,0,100,(200+(65*(lengthSpeed*10)))-(boneX*lengthSpeed),300+(65*(lengthSpeed*10))-(boneX*lengthSpeed));
       }
       else{
          bone_length = map(bass, 0, 100,200, 300);
@@ -75,7 +77,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
    }
    ////////////////////Render///////////////////////
    
-   Bars();
+   //Bars();
    Bones();
 
 
