@@ -1,5 +1,5 @@
-const canvasWidth = 640;
-const canvasHeight = 480;
+const canvasWidth = 1280;
+const canvasHeight = 720;
 
 
 let mainCanvas;
