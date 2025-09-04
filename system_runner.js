@@ -43,6 +43,9 @@ function songLoadedSoFar(soFar) {
 function preload() {
   table = loadTable('volumes.csv', 'csv');
   words = loadStrings('words.txt');
+
+  img_1 = loadImage('/assets/FLowerBoy4.png');
+  img_2 = loadImage('/assets/bee.webp');
 }
 
 let volumes = [];
