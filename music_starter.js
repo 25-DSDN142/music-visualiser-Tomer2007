@@ -16,13 +16,21 @@ function draw_one_frame(words, words2, vocal, drum, bass, other, counter) {
    if (frameCount < 922){
       fps = frameCount*0.5
    }
-    else if (frameCount < 1700){
+    else if (frameCount < 1680){
         fps = frameCount;
       }
+      else if (frameCount < 2530){
+        fps = frameCount*1.2;
+      }
+      else if (frameCount >  2530 && frameCount < 3787){
+        fps = frameCount*0.3;
+      }
       else {
-         fps = frameCount*2;
+         fps = frameCount*3;
       }
    
+
+      
  ////////////////Functions////////////////////////
    
    function Bars(){
@@ -64,13 +72,14 @@ function draw_one_frame(words, words2, vocal, drum, bass, other, counter) {
    textSize(2);
    fill(0);
    textAlign(CENTER);
-   textSize(vocal*2);
+   textSize(vocal*2.3);
    text(words, width/2, height/3);
    }
+   
    function text2 (){
    fill(227, 103, 45);
    textAlign(CENTER);
-   textSize(400);
+   textSize(350);
    text(words2, width/2, height/2 - 70);
    }
 
@@ -107,13 +116,11 @@ function draw_one_frame(words, words2, vocal, drum, bass, other, counter) {
       BeeXchange = random(-BeeBass,BeeBass);
       BeeYchange = random(-BeeBass,BeeBass);
       
-      if (BeeX > 840 || BeeX < 240)
-      {
-         BeeY = 500+i*10 + frameCount*0.4;
-      }
-      else{
-         BeeY = 100+i*10 - frameCount*0.4;
-      }
+      
+      
+   
+         BeeY = 500+i*10 + i*frameCount*0.2;
+      
 
       BeeX = BeeX - BeeXchange;
       BeeY = BeeY - BeeYchange;
@@ -122,7 +129,10 @@ function draw_one_frame(words, words2, vocal, drum, bass, other, counter) {
          BeeX = BeeX - 1600;
       }
       while (BeeY > 400){
-         BeeY = BeeY - 480;
+         BeeY = BeeY - 500;
+      }
+      if (BeeY < 50){
+         BeeYchange = 0;
       }
       
       //translate
@@ -150,8 +160,14 @@ function draw_one_frame(words, words2, vocal, drum, bass, other, counter) {
       if (frameCount < 922) { 
         FlowerX = (100 - FieldOffset -i*140) + fps;
       }
-      else if (frameCount < 1700){
-        FlowerX = (-365- FieldOffset-i*140) + fps;
+      else if (frameCount < 1680){
+        FlowerX = (-335- FieldOffset-i*140) + fps;
+      }
+      else if (frameCount < 2530){
+        FlowerX = (-355- FieldOffset-i*140) + fps;
+      }
+      else if (frameCount > 2530 && frameCount < 3787){
+        FlowerX = (360 - FieldOffset-i*140) + fps;
       }
       else {
          FlowerX = (100- FieldOffset-i*140) + fps;
@@ -166,10 +182,10 @@ function draw_one_frame(words, words2, vocal, drum, bass, other, counter) {
       if(FlowerX > -100 && FlowerX < 320) {
          flower_length = map(other, 0, 100,(FlowerBaseY + 30+FlowerX*lengthSpeed), (FlowerBaseY + 130+FlowerX*lengthSpeed));
       }  
-      else if (FlowerX > 319 && FlowerX < 780)  {
+      else if (FlowerX > 319 && FlowerX < 760)  {
          flower_length = map(other,0,100,(FlowerBaseY + 30+(65*(lengthSpeed*10)))-(FlowerX*lengthSpeed),FlowerBaseY + 130+(65*(lengthSpeed*10))-(FlowerX*lengthSpeed));
       }
-      else if (FlowerX > 779 && FlowerX < 1100)  {
+      else if (FlowerX > 759 && FlowerX < 1100)  {
          flower_length = map(other,0,100,FlowerBaseY + 30+(-89*(lengthSpeed*10))+(FlowerX*lengthSpeed),FlowerBaseY + 130+(-89*(lengthSpeed*10))+(FlowerX*lengthSpeed));
       }
       else if (FlowerX > 1099) {
@@ -180,8 +196,10 @@ function draw_one_frame(words, words2, vocal, drum, bass, other, counter) {
       }
       noStroke();
       fill(36, 105, 18);
-      rect(FlowerX,FieldY+50,20,flower_length*0.8);
 
+      if (flower_length > 0) {
+      rect(FlowerX,FieldY+50,20,flower_length*0.8);
+      }
       //applyMatrix();
       FlowerY = FieldY - flower_length*0.3;
       //rotate(i + frameCount, [FlowerX, FlowerX, FlowerY]);
@@ -242,15 +260,15 @@ function draw_one_frame(words, words2, vocal, drum, bass, other, counter) {
       ellipse(640, 370, 880, 380);
 
       cloudX = frameCount*0.5;
-      cloudX2 = 700 + frameCount*0.3 + other*0.;
-      cloudX3 = -300 + frameCount*0.2 + other*0.1;
+      cloudX2 = 700 + frameCount*0.3 + other*0.2;
+      cloudX3 = -300 + frameCount*0.35 + other*0.1;
 
        while (cloudX > 1420){
          cloudX = cloudX - 1660;
       }
       
       while (cloudX2 > 1480){
-         cloudX2 = cloudX2 - 1550;
+         cloudX2 = cloudX2 - 1750;
       }
 
       while (cloudX3 > 1480){

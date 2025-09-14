@@ -20,6 +20,7 @@ let words2 = [];
 let WordsOrig;
 
 
+
 function songLoadedError() {
   songButton.elt.innerHTML = "Song: Load Error";
   print(songButton.elt.innerHTML);
@@ -109,20 +110,6 @@ function setup() {
     let radius = map(smoothing, 0, 100, 0, 3);
     for(let i=0; i<4; i++) {
       volumes[i] = Taira.smoothen(volumes[i], Taira.ALGORITHMS.GAUSSIAN, 10, radius, true)
-    }
-  }
-
-  for (let line of WordsOrig) {
-    line = line.trim();
-    if (line.startsWith("[1]")) {
-      words.push(line.replace("[1]","").trim());
-    }
-    else if (line.startsWith("[2]")) {
-      words2.push(line.replace("[2]","").trim());
-    }
-    else{
-      words.push("");
-      words2.push("");
     }
   }
 
@@ -217,10 +204,33 @@ function draw() {
         // let row = table["rows"][curSlice].arr
         // draw_one_frame(row);
         // print(row);
+ 
+  
+  
+        for (let line of WordsOrig) {
+    line = line.trim();
+    if (line.startsWith("[1]")) {
+      words.push(line.replace("[1]","").trim());
+      words2.push("");
+    }
+    else if (line.startsWith("[2]")) {
+      words2.push(line.replace("[2]","").trim());
+      words.push("");
+    }
+    else if (line.startsWith("[3]")) {
+      words2.push(line.replace("[3]","La La La").trim());
+      words.push(line.replace("[3]", "Okay").trim());
+    }
+    else{
+      words.push("");
+      words2.push("");
+    }
+  }
 
         
         let roww = [volumes[0][curSlice], volumes[1][curSlice], volumes[2][curSlice], volumes[3][curSlice]]
         cur_words = "";
+      
         if (curSlice < words.length) {
           cur_words = words[curSlice];
         }
@@ -235,7 +245,8 @@ function draw() {
         slider4.value(roww[3]);
        draw_one_frame(cur_words, cur_words2, roww[0], roww[1], roww[2], roww[3], curSlice);//currentTime()
        //draw_one_frame(cur_words, roww[0], roww[1], roww[2], roww[3], song.currentTime());
-      }
+      
+    }
     }
   }
 }
