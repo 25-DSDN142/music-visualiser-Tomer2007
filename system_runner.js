@@ -1,5 +1,5 @@
-const canvasWidth = 540;
-const canvasHeight = 960;
+const canvasWidth = 1280;
+const canvasHeight = 720;
 
 
 let mainCanvas;
@@ -14,7 +14,12 @@ let song;
 let songIsPlaying = false;
 let songEpoch = 0;              // millis when song starts
 let table;
-let words;
+
+let words = [];
+let words2 = [];
+let WordsOrig;
+
+
 
 function songLoadedError() {
   songButton.elt.innerHTML = "Song: Load Error";
@@ -42,7 +47,12 @@ function songLoadedSoFar(soFar) {
 
 function preload() {
   table = loadTable('volumes.csv', 'csv');
-  words = loadStrings('words.txt');
+  WordsOrig = loadStrings('words.txt');
+  
+  img_1 = loadImage('/assets/FLowerBoy4.png');
+  img_2 = loadImage('/assets/bee.webp');
+  img_3 = loadImage('/assets/bee2.png');
+  img_4 = loadImage('/assets/Flower2.png'); 
 }
 
 let volumes = [];
@@ -102,6 +112,7 @@ function setup() {
       volumes[i] = Taira.smoothen(volumes[i], Taira.ALGORITHMS.GAUSSIAN, 10, radius, true)
     }
   }
+
 }
 
 function switchRunMode() {
@@ -144,12 +155,13 @@ function switchRunMode() {
 function draw() {
   if (editorMode) {
     let w = textInput.value();
+    let w2 = textInput.value();
     let s1 = slider1.value();
     let s2 = slider2.value();
     let s3 = slider3.value();
     let s4 = slider4.value();
 
-    draw_one_frame(w, s1, s2, s3, s4, 0);
+    draw_one_frame(w, w2, s1, s2, s3, s4, 0);
   }
   else {
     if(songEpoch > 0) {
@@ -192,19 +204,49 @@ function draw() {
         // let row = table["rows"][curSlice].arr
         // draw_one_frame(row);
         // print(row);
+ 
+  
+  
+        for (let line of WordsOrig) {
+    line = line.trim();
+    if (line.startsWith("[1]")) {
+      words.push(line.replace("[1]","").trim());
+      words2.push("");
+    }
+    else if (line.startsWith("[2]")) {
+      words2.push(line.replace("[2]","").trim());
+      words.push("");
+    }
+    else if (line.startsWith("[3]")) {
+      words2.push(line.replace("[3]","La La La").trim());
+      words.push(line.replace("[3]", "Okay").trim());
+    }
+    else{
+      words.push("");
+      words2.push("");
+    }
+  }
+
+        
         let roww = [volumes[0][curSlice], volumes[1][curSlice], volumes[2][curSlice], volumes[3][curSlice]]
         cur_words = "";
+      
         if (curSlice < words.length) {
           cur_words = words[curSlice];
         }
+        if (curSlice < words2.length) {
+          cur_words2 = words2[curSlice];
+        }
         textInput.value(cur_words);
+        textInput.value(cur_words2);
         slider1.value(roww[0]);
         slider2.value(roww[1]);
         slider3.value(roww[2]);
         slider4.value(roww[3]);
-       draw_one_frame(cur_words, roww[0], roww[1], roww[2], roww[3], curSlice);//currentTime()
+       draw_one_frame(cur_words, cur_words2, roww[0], roww[1], roww[2], roww[3], curSlice);//currentTime()
        //draw_one_frame(cur_words, roww[0], roww[1], roww[2], roww[3], song.currentTime());
-      }
+      
+    }
     }
   }
 }
